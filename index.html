@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TITANIC</title>
+  <style>
+    :root {
+      --primary: #0d47a1;
+      --primary-light: #1565c0;
+      --primary-dark: #002171;
+      --accent: #ff8f00;
+      --light-gray: #f5f5f5;
+      --mid-gray: #e0e0e0;
+      --dark-gray: #616161;
+      --success: #43a047;
+      --warning: #fb8c00;
+      --error: #e53935;
+    }
+    
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #e0f7fa, #bbdefb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 480px;
+    }
+    
+    .logo-container {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .logo-container svg {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    .logo-container h2 {
+      margin: 10px 0 0;
+      color: var(--primary);
+      font-size: clamp(20px, 5vw, 24px);
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+    
+    .form-section h3 {
+      color: var(--primary);
+      margin-top: 0;
+      font-size: clamp(16px, 4vw, 18px);
+      position: relative;
+      padding-bottom: 8px;
+      margin-bottom: 16px;
+    }
+    
+    .form-section h3:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      width: 50px;
+      background-color: var(--accent);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid var(--mid-gray);
+      border-radius: 6px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(13, 71, 161, 0.1);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 12px;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-light);
+    }
+    
+    button.secondary {
+      background-color: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    
+    button.secondary:hover {
+      background-color: rgba(13, 71, 161, 0.05);
+    }
+    
+    .sign-up-text {
+      text-align: center;
+      margin-top: 1px;
+      margin-bottom: 16px;
+    }
+    
+    .sign-up-text a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .sign-up-text a:hover {
+      text-decoration: underline;
+    }
+
+    .order-item {
+      background-color: var(--light-gray);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid var(--primary);
+      position: relative;
+      transition: transform 0.2s;
+      word-break: break-word;
+    }
+    
+    .order-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+
+    .order-status {
+      font-weight: bold;
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background-color: var(--warning);
+      color: white;
+    }
+
+    .status-accepted {
+      background-color: var(--success);
+      color: white;
+    }
+
+    .status-declined {
+      background-color: var(--error);
+      color: white;
+    }
+
+    .no-orders {
+      text-align: center;
+      color: var(--dark-gray);
+      padding: 20px;
+      background: var(--light-gray);
+      border-radius: 8px;
+      font-style: italic;
+    }
+    
+    .divider {
+      height: 1px;
+      background-color: var(--mid-gray);
+      margin: 20px 0;
+    }
+    
+    .form-group {
+      margin-bottom: 8px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--dark-gray);
+      font-size: 14px;
+    }
+    
+    a {
+      color: var(--primary);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+    .toggle-orders-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      padding: 12px;
+      background-color: var(--light-gray);
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: none;
+      color: var(--primary-dark);
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+    
+    .toggle-orders-btn:hover {
+      background-color: var(--mid-gray);
+    }
+    
+    .toggle-orders-btn svg {
+      transition: transform 0.3s ease;
+    }
+    
+    .toggle-orders-btn.active svg {
+      transform: rotate(180deg);
+    }
+    
+
+    @media (max-width: 360px) {
+      body {
+        padding: 10px;
+      }
+      
+      .container {
+        padding: 15px;
+      }
+      
+      input, button {
+        padding: 10px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .container {
+        padding: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="logo-container">
+      <h2>TITANIC</h2>
+    
+    </div>
+
+    <div id="authForm" class="form-section">
+       <div class="sign-up-text">
+       please sign in to to link orders section
+      </div>
+      <h3>Sign In</h3>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" />
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password" />
+      </div>
+      <button id="signinBtn">Sign In</button>
+     <a href="store.html"><button id="signinBtn">view store items</button></a> 
+      <div class="sign-up-text">
+        Don't have an account? <a href="#" id="signupLink">Sign Up</a>
+      </div>
+    </div>
+
+    <div id="infoForm" class="form-section" style="display:none">
+      <h3>Enter Your Info</h3>
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city">
+      </div>
+      <div class="form-group">
+        <label for="street">Street Address</label>
+        <input type="text" id="street" placeholder="Enter your street address">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter your phone number">
+      </div>
+      <div class="form-group">
+        <label for="directions">Additional Directions</label>
+        <input type="text" id="directions" placeholder="Any additional information for delivery">
+      </div>
+      <button id="saveInfoBtn">Save Info</button>
+    </div>
+
+    <div id="orderForm" class="form-section" style="display:none">
+        <p>Delivery Inside Duhok City: 3000 IQD</p>
+        
+      <h3>Place Order</h3>
+      <div class="form-group">
+        <label for="itemLink">Item Link</label>
+        <input type="text" id="itemLink" placeholder="Paste product URL">
+      </div>
+      <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" id="size" placeholder="Enter size (if applicable)">
+      </div>
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" id="color" placeholder="Enter color preference">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" placeholder="Enter quantity" min="1" value="1">
+      </div>
+
+      <button id="sendOrderBtn">Send Order</button>
+      <a href="store.html"><button id="sendOrderBtn">View Store Items</button></a>
+      <button id="toggleInfoBtn" class="secondary">Edit My Info</button>
+
+      <div id="editableInfo" style="display: none; margin-top: 16px;">
+        <div class="divider"></div>
+        <h3>Update My Info</h3>
+        <div class="form-group">
+          <label for="fullName">Full Name</label>
+          <input type="text" id="fullName" placeholder="Full Name">
+        </div>
+        <div class="form-group">
+          <label for="cityOrder">City</label>
+          <input type="text" id="cityOrder" placeholder="City">
+        </div>
+        <div class="form-group">
+          <label for="streetOrder">Street Address</label>
+          <input type="text" id="streetOrder" placeholder="Street">
+        </div>
+        <div class="form-group">
+          <label for="phoneOrder">Phone Number</label>
+          <input type="text" id="phoneOrder" placeholder="Phone Number">
+        </div>
+        <div class="form-group">
+          <label for="directionsOrder">Additional Directions</label>
+          <input type="text" id="directionsOrder" placeholder="Additional Directions">
+        </div>
+        <button id="saveInfoFromOrderBtn">Save Changes</button>
+      </div>
+
+      <div class="divider"></div>
+      
+      <button id="toggleOrdersBtn" class="toggle-orders-btn">
+        <span>View My Orders</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      
+      <div id="ordersList" style="display:none">
+        <div class="no-orders">No orders yet</div>
+      </div>
+      
+      <div class="divider"></div>
+      <button id="signOutBtn" class="secondary">Sign Out</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      signOut as firebaseSignOut
+    } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-auth.js";
+    import {
+      getDatabase,
+      ref,
+      set,
+      push,
+      get,
+      onValue
+    } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDY3Y9uwQMFEeZQfLE09PrpbYmld02giZQ",
+      authDomain: "titanic-shop.firebaseapp.com",
+      projectId: "titanic-shop",
+      storageBucket: "titanic-shop.appspot.com",
+      messagingSenderId: "552361007073",
+      appId: "1:552361007073:web:bf7c506205e1aa6aada4a0",
+      databaseURL: "https://titanic-shop-default-rtdb.firebaseio.com"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app);
+
+    const ADMIN_UID = "wgSFezMjajPWpLQTcYYGSiVJ7jn1";
+
+    document.getElementById("signupLink").addEventListener("click", (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      
+      if (!email || !password) {
+        alert("Please enter both email and password");
+        return;
+      }
+      
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          alert("Signed up successfully! Now fill your info.");
+          document.getElementById("authForm").style.display = "none";
+          document.getElementById("infoForm").style.display = "block";
+        })
+        .catch(error => alert(error.message));
+    });
+
+    document.getElementById("signinBtn").addEventListener("click", () => {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      
+      if (!email || !password) {
+        alert("Please enter both email and password");
+        return;
+      }
+      
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          checkUserInfo();
+        })
+        .catch(error => alert(error.message));
+    });
+
+    document.getElementById("toggleOrdersBtn").addEventListener("click", function() {
+      const ordersList = document.getElementById("ordersList");
+      if (ordersList.style.display === "none") {
+        ordersList.style.display = "block";
+        this.classList.add("active");
+      } else {
+        ordersList.style.display = "none";
+        this.classList.remove("active");
+      }
+    });
+
+    function checkUserInfo() {
+      const user = auth.currentUser;
+      if (user) {
+        const infoRef = ref(db, "clientInfo/" + user.uid);
+        get(infoRef).then(snapshot => {
+          if (snapshot.exists()) {
+            const info = snapshot.val();
+            document.getElementById("fullName").value = info.name || "";
+            document.getElementById("cityOrder").value = info.city || "";
+            document.getElementById("streetOrder").value = info.street || "";
+            document.getElementById("phoneOrder").value = info.phone || "";
+            document.getElementById("directionsOrder").value = info.directions || "";
+
+            document.getElementById("authForm").style.display = "none";
+            document.getElementById("orderForm").style.display = "block";
+            
+            loadUserOrders(user.uid);
+          } else {
+            document.getElementById("authForm").style.display = "none";
+            document.getElementById("infoForm").style.display = "block";
+          }
+        }).catch(error => alert(error.message));
+      }
+    }
+
+    function loadUserOrders(userId) {
+      const ordersRef = ref(db, "orders/" + userId);
+      
+     
+      onValue(ordersRef, (snapshot) => {
+        const ordersList = document.getElementById("ordersList");
+        
+        if (snapshot.exists()) {
+          const orders = snapshot.val();
+          ordersList.innerHTML = "";
+          
+          // Sort orders by timestamp (newest first)
+          const sortedOrders = Object.entries(orders).sort((a, b) => {
+            return new Date(b[1].timestamp) - new Date(a[1].timestamp);
+          });
+          
+          sortedOrders.forEach(([key, order]) => {
+            const orderDate = order.timestamp 
+              ? new Date(order.timestamp).toLocaleDateString() + ' ' + new Date(order.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})
+              : 'Unknown';
+            const statusClass = getStatusClass(order.status);
+            
+            const orderElement = document.createElement("div");
+            orderElement.className = "order-item";
+            orderElement.innerHTML = `
+              <div><strong>Item:</strong> ${getItemLinkDisplay(order.itemLink)}</div>
+              <div><strong>Size:</strong> ${order.size || 'N/A'}</div>
+              <div><strong>Color:</strong> ${order.color || 'N/A'}</div>
+              <div><strong>Quantity:</strong> ${order.quantity || '1'}</div>
+              <div><strong>Date:</strong> ${orderDate}</div>
+              <div>
+                <span class="order-status ${statusClass}">
+                  ${order.status ? order.status.toUpperCase() : 'PENDING'}
+                </span>
+              </div>
+            `;
+            
+            ordersList.appendChild(orderElement);
+          });
+        } else {
+          ordersList.innerHTML = '<div class="no-orders">No orders yet</div>';
+        }
+      });
+    }
+
+    function getStatusClass(status) {
+      status = (status || "pending").toLowerCase();
+      
+      if (status === "accepted") return "status-accepted";
+      if (status === "declined") return "status-declined";
+      return "status-pending";
+    }
+
+    function getItemLinkDisplay(link) {
+      if (!link) return 'No link provided';
+      
+      // Truncate long URLs for display
+      const displayLink = link.length > 40 ? link.substring(0, 37) + '...' : link;
+      return `<a href="${link}" target="_blank">${displayLink}</a>`;
+    }
+
+    document.getElementById("saveInfoBtn").addEventListener("click", () => {
+      const user = auth.currentUser;
+      if (user) {
+        const name = document.getElementById("name").value;
+        const city = document.getElementById("city").value;
+        const street = document.getElementById("street").value;
+        const phone = document.getElementById("phone").value;
+        
+        if (!name || !city || !street || !phone) {
+          alert("Please fill all required fields");
+          return;
+        }
+        
+        const userData = {
+          name: name,
+          city: city,
+          street: street,
+          phone: phone,
+          directions: document.getElementById("directions").value,
+          timestamp: new Date().toISOString()
+        };
+        const infoRef = ref(db, "clientInfo/" + user.uid);
+        set(infoRef, userData)
+          .then(() => {
+            alert("Info saved successfully!");
+            document.getElementById("infoForm").style.display = "none";
+            document.getElementById("orderForm").style.display = "block";
+            checkUserInfo();
+          })
+          .catch(error => alert(error.message));
+      }
+    });
+
+    document.getElementById("sendOrderBtn").addEventListener("click", () => {
+      const user = auth.currentUser;
+      if (user) {
+      
+        const itemLink = document.getElementById("itemLink").value;
+        if (!itemLink) {
+          alert("Please provide an item link");
+          return;
+        }
+        
+        const infoRef = ref(db, "clientInfo/" + user.uid);
+        get(infoRef).then(snapshot => {
+          if (snapshot.exists()) {
+            const userInfo = snapshot.val();
+            const order = {
+              itemLink: itemLink,
+              size: document.getElementById("size").value,
+              color: document.getElementById("color").value,
+              quantity: document.getElementById("quantity").value || "1",
+              timestamp: new Date().toISOString(),
+              clientInfo: userInfo,
+              status: "pending" 
+            };
+            const orderRef = ref(db, "orders/" + user.uid);
+            const newOrder = push(orderRef);
+            set(newOrder, order)
+              .then(() => {
+                alert("Order sent successfully!");
+                
+                document.getElementById("itemLink").value = "";
+                document.getElementById("size").value = "";
+                document.getElementById("color").value = "";
+                document.getElementById("quantity").value = "1";
+                
+                // Show orders after placing a new one
+                document.getElementById("ordersList").style.display = "block";
+                document.getElementById("toggleOrdersBtn").classList.add("active");
+              })
+              .catch(error => alert(error.message));
+          } else {
+            alert("Please update your information before placing an order");
+            document.getElementById("toggleInfoBtn").click();
+          }
+        }).catch(error => alert(error.message));
+      }
+    });
+
+    document.getElementById("toggleInfoBtn").addEventListener("click", () => {
+      const editableInfo = document.getElementById("editableInfo");
+      editableInfo.style.display = editableInfo.style.display === "none" ? "block" : "none";
+    });
+
+    document.getElementById("saveInfoFromOrderBtn").addEventListener("click", () => {
+      const user = auth.currentUser;
+      if (user) {
+        // Validate required fields
+        const name = document.getElementById("fullName").value;
+        const city = document.getElementById("cityOrder").value;
+        const street = document.getElementById("streetOrder").value;
+        const phone = document.getElementById("phoneOrder").value;
+        
+        if (!name || !city || !street || !phone) {
+          alert("Please fill all required fields");
+          return;
+        }
+        
+        const updatedInfo = {
+          name: name,
+          city: city,
+          street: street,
+          phone: phone,
+          directions: document.getElementById("directionsOrder").value,
+          timestamp: new Date().toISOString()
+        };
+        const infoRef = ref(db, "clientInfo/" + user.uid);
+        set(infoRef, updatedInfo)
+          .then(() => {
+            alert("Info updated successfully!");
+            document.getElementById("editableInfo").style.display = "none";
+            checkUserInfo();
+          })
+          .catch(error => alert(error.message));
+      }
+    });
+
+    document.getElementById("signOutBtn").addEventListener("click", () => {
+      if(confirm("Are you sure you want to sign out?")) {
+        firebaseSignOut(auth)
+          .then(() => {
+            document.getElementById("authForm").style.display = "block";
+            document.getElementById("orderForm").style.display = "none";
+          
+            location.reload();
+          })
+          .catch(error => alert(error.message));
+      }
+    });
+    
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        checkUserInfo();
+      } else {
+        document.getElementById("authForm").style.display = "block";
+        document.getElementById("orderForm").style.display = "none";
+      }
+    });
+  </script>
+</body>
+</html>
