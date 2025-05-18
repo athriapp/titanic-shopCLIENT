@@ -264,13 +264,12 @@
 <body>
   <div class="container">
     <div class="logo-container">
-      <h2>TITANIC</h2>
-    
+      <img src="titanic.png" alt="Logo" style="width: 100px; height: auto; margin-bottom: 10px;">
+      <h2>TITANIC SHOP</h2>
     </div>
-
     <div id="authForm" class="form-section">
        <div class="sign-up-text">
-       please sign in to to link orders section
+       Please Sign In
       </div>
       <h3>Sign In</h3>
       <div class="form-group">
@@ -315,28 +314,30 @@
     </div>
 
     <div id="orderForm" class="form-section" style="display:none">
+       <p>Delivery Right Infront Of Your Door</p>
+       <p>Service Tax: 1000IQD Per Item</p>
         <p>Delivery Inside Duhok City: 3000 IQD</p>
-        
+       
       <h3>Place Order</h3>
       <div class="form-group">
-        <label for="itemLink">Item Link</label>
-        <input type="text" id="itemLink" placeholder="Paste product URL">
+        <label for="itemLink">Enter Item Link</label>
+        <input type="text" id="itemLink" placeholder="Put the link here">
       </div>
       <div class="form-group">
-        <label for="size">Size</label>
-        <input type="text" id="size" placeholder="Enter size (if applicable)">
+        <label for="size">Enter Item Size</label>
+        <input type="text" id="size" placeholder="Example: 39 Or XL ">
       </div>
       <div class="form-group">
         <label for="color">Color</label>
-        <input type="text" id="color" placeholder="Enter color preference">
+        <input type="text" id="color" placeholder="Example: Black, Red, Blue">
       </div>
       <div class="form-group">
         <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" placeholder="Enter quantity" min="1" value="1">
+        <input type="number" id="quantity" placeholder="How Many Items You Want" min="1" value="1">
       </div>
 
       <button id="sendOrderBtn">Send Order</button>
-      <a href="store.html"><button id="sendOrderBtn">View Store Items</button></a>
+      <a href="commingSoon.HTML"><button id="sendOrderBtn" style="background-color: #fb8c00;">Fast Orders Section</button></a>
       <button id="toggleInfoBtn" class="secondary">Edit My Info</button>
 
       <div id="editableInfo" style="display: none; margin-top: 16px;">
