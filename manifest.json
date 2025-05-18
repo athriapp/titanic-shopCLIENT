@@ -7,7 +7,7 @@
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "https://github.com/athriapp/titanic-online/blob/main/titanic.png",
+      "src": "https://raw.githubusercontent.com/athriapp/titanic-online/main/titanic.png",
       "sizes": "1024x1024",
       "type": "image/png"
     }
