@@ -1,0 +1,15 @@
+{
+  "name": "Titanic Online",
+  "short_name": "Titanic",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "https://github.com/athriapp/titanic-online/blob/main/titanic.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}
