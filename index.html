@@ -111,6 +111,21 @@
             text-align: center;
         }
 
+        .btn2 { 
+            margin-top: 5px;
+            background-color:orangered;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            text-align: center;
+        }
+
         .btn:hover {
             background-color: #004494;
         }
@@ -315,7 +330,9 @@
 <body>
     <div class="container">
         <div class="logo-container">
-            <div class="logo"><span class="ship-icon">⚓</span>Titanic Shop</div>
+            <div class="logo">
+                <img src="titanic.png" class="ship-icon" style="width: 100px; height: auto;display: block;margin-left: 40%;">
+                TITANIC STORE</div>
         </div>
 
         <!-- Toast Notification -->
@@ -411,6 +428,7 @@
                     <input type="number" id="itemQuantity" min="1" value="1" required>
                 </div>
                 <button id="placeOrderBtn" class="btn">Place Order</button>
+                <A href="store.html"> <button  class="btn2">FAST ORDER SECTION</button></A>
             </div>
 
             <!-- Profile Container -->
