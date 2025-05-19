@@ -349,7 +349,7 @@
         <input type="number" id="quantity" placeholder="Enter quantity" min="1" value="1">
       </div>
 
-      <button id="sendOrderBtn">Send Order</button>
+      <button onclick="sendLink()">Send Order</button>
       <a href="store.html"><button id="sendOrderBtn">View Store Items</button></a>
       <button id="toggleInfoBtn" class="secondary">Edit My Info</button>
 
@@ -466,6 +466,8 @@
         .catch(error => alert(error.message));
     });
 
+
+
     document.getElementById("toggleOrdersBtn").addEventListener("click", function() {
       const ordersList = document.getElementById("ordersList");
       if (ordersList.style.display === "none") {
@@ -501,6 +503,21 @@
         }).catch(error => alert(error.message));
       }
     }
+
+    function sendLink() {
+  const link = document.getElementById("linkInput").value.trim();
+
+  // Optional: sanitize/validate the link
+  if (!link.startsWith("http")) {
+    alert("Please enter a valid link");
+    return;
+  }
+
+  // Send to Firebase or wherever
+  const encodedLink = encodeURIComponent(link); // if you want to encode
+  sendToFirebase(encodedLink);
+}
+
 
     function loadUserOrders(userId) {
       const ordersRef = ref(db, "orders/" + userId);
