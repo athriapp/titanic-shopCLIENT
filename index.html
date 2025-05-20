@@ -7,6 +7,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-app-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database-compat.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
     <style>
         :root {
             --primary-color: #0056b3;
@@ -325,6 +328,23 @@
                 padding: 20px;
             }
         }
+
+        .sizeBtn{
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            width: 55%;
+            text-align: center;
+            margin-top: 4px;
+            height: 38px;
+
+        }
     </style>
 </head>
 <body>
@@ -335,11 +355,10 @@
                 TITANIC STORE</div>
         </div>
 
-        <!-- Toast Notification -->
         <div id="toast" class="toast"></div>
 
-        <!-- Authentication Forms -->
         <div id="authContainer" class="animated">
+            
             <div id="loginForm" class="card">
                 <h2 class="text-center">Login</h2>
                 <div class="form-group">
@@ -352,10 +371,10 @@
                 </div>
                 <button id="loginBtn" class="btn">Login</button>
                 <p class="text-center mt-20">Don't have an account? <button id="showSignupBtn" class="btn-link">Sign up</button></p>
+                <P style="margin-left: 27%;margin-top: 27px;">ProtectedBy: <a href="https://cloud.google.com/docs/security/production-services-protection?utm_source=chatgpt.com">GoogleCloud</a></P>
             </div>
 
             <div id="signupContainer" class="hidden">
-                <!-- Progress bar for signup -->
                 <div class="progress-container">
                     <div class="progress-bar">
                         <div class="progress-step active" id="step1Indicator"></div>
@@ -366,7 +385,6 @@
                     </div>
                 </div>
 
-                <!-- Step 1: Email and Password -->
                 <div id="signupStep1" class="card animated">
                     <h2 class="text-center">Create Account</h2>
                     <div class="form-group">
@@ -381,34 +399,36 @@
                     <p class="text-center mt-20">Already have an account? <button id="showLoginFromSignupBtn" class="btn-link">Login</button></p>
                 </div>
 
-                <!-- Step 2: User Information -->
-                <div id="signupStep2" class="card animated hidden">
-                    <h2 class="text-center">Your Information</h2>
-                    <div class="form-group">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" placeholder="Enter your full name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <input type="text" id="city" placeholder="Enter your city" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" id="address" placeholder="Enter your address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="additionalAddress">Additional Address (Optional)</label>
-                        <input type="text" id="additionalAddress" placeholder="Apartment, suite, etc.">
-                    </div>
-                    <button id="backToStep1Btn" class="btn-link">Back</button>
-                    <button id="signupBtn" class="btn">Complete Sign Up</button>
-                </div>
+               <div id="signupStep2" class="card animated hidden">
+    <h2 class="text-center">Your Information</h2>
+    <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="Enter your full name" required>
+    </div>
+    <div class="form-group">
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter your city" required>
+    </div>
+    <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number" required>
+    </div>
+    <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" placeholder="Enter your address" required>
+    </div>
+    <div class="form-group">
+        <label for="additionalAddress">Additional Address (Optional)</label>
+        <input type="text" id="additionalAddress" placeholder="Apartment, suite, etc.">
+    </div>
+    <button id="backToStep1Btn" class="btn-link">Back</button>
+    <button id="signupBtn" class="btn">Complete Sign Up</button>
+</div>
             </div>
         </div>
 
-        <!-- Main App Content (Shown after authentication) -->
         <div id="appContent" class="hidden">
-            <!-- Order Container -->
+           
             <div id="orderContainer" class="card animated">
                 <h2 class="text-center">Place an Order</h2>
                 <div class="form-group">
@@ -416,8 +436,9 @@
                     <input type="text" id="itemLink" placeholder="Paste product URL here" required>
                 </div>
                 <div class="form-group">
-                    <label for="itemSize">Size</label>
-                    <input type="text" id="itemSize" placeholder="e.g., S, M, L, XL" required>
+                    <label for="itemSize">Size (Optional)</label>
+                    <input type="text" id="itemSize" placeholder="Enter The Size" required>
+                    <button onclick='sizeless()' id="sizeBtn" class="sizeBtn">NO SIZE REQUIRED</button>
                 </div>
                 <div class="form-group">
                     <label for="itemColor">Color</label>
@@ -429,47 +450,57 @@
                 </div>
                 <button id="placeOrderBtn" class="btn">Place Order</button>
                 <A href="store.html"> <button  class="btn2">FAST ORDER SECTION</button></A>
+                <div style="display: flex; gap: 10px;margin-top: 6px;">
+                    <button onclick="window.open('https://www.instagram.com', '_blank')" style="font-size: 24px; padding: 10px;margin-left: 8px;">
+                        <i class="fab fa-instagram"></i>
+                    </button>
+                    
+                    <button onclick="window.open('https://www.tiktok.com', '_blank')" style="font-size: 24px; padding: 10px;">
+                        <i class="fab fa-tiktok"></i>
+                    </button>
+                    </div>
+
             </div>
 
-            <!-- Profile Container -->
             <div id="profileContainer" class="card animated hidden">
-                <h2 class="text-center">Your Profile</h2>
-                <div class="form-group">
-                    <label for="profileEmail">Email</label>
-                    <input type="email" id="profileEmail" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="profileFullName">Full Name</label>
-                    <input type="text" id="profileFullName" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="profileCity">City</label>
-                    <input type="text" id="profileCity" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="profileAddress">Address</label>
-                    <input type="text" id="profileAddress" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="profileAdditionalAddress">Additional Address</label>
-                    <input type="text" id="profileAdditionalAddress" readonly>
-                </div>
-                <button id="editProfileBtn" class="btn">Edit Profile</button>
-                <button id="saveProfileBtn" class="btn hidden">Save Changes</button>
-                <button id="logoutBtn" class="btn mt-20" style="background-color: var(--error-color);">Logout</button>
-            </div>
+    <h2 class="text-center">Your Profile</h2>
+    <div class="form-group">
+        <label for="profileEmail">Email</label>
+        <input type="email" id="profileEmail" readonly>
+    </div>
+    <div class="form-group">
+        <label for="profileFullName">Full Name</label>
+        <input type="text" id="profileFullName" readonly>
+    </div>
+    <div class="form-group">
+        <label for="profileCity">City</label>
+        <input type="text" id="profileCity" readonly>
+    </div>
+    <div class="form-group">
+        <label for="profilePhone">Phone Number</label>
+        <input type="tel" id="profilePhone" readonly>
+    </div>
+    <div class="form-group">
+        <label for="profileAddress">Address</label>
+        <input type="text" id="profileAddress" readonly>
+    </div>
+    <div class="form-group">
+        <label for="profileAdditionalAddress">Additional Address</label>
+        <input type="text" id="profileAdditionalAddress" readonly>
+    </div>
+    <button id="editProfileBtn" class="btn">Edit Profile</button>
+    <button id="saveProfileBtn" class="btn hidden">Save Changes</button>
+    <button id="logoutBtn" class="btn mt-20" style="background-color: var(--error-color);">Logout</button>
+</div>
 
-            <!-- Orders Container -->
             <div id="ordersContainer" class="card animated hidden">
                 <h2 class="text-center">Your Orders</h2>
                 <div id="ordersList">
-                    <!-- Orders will be dynamically inserted here -->
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bottom Navigation Bar -->
     <div id="bottomNav" class="bottom-nav hidden">
         <div id="navOrder" class="nav-item active">
             <span class="nav-icon">📦</span>
@@ -509,15 +540,7 @@
         const step2Indicator = document.getElementById('step2Indicator');
         const progressBarFill = document.getElementById('progressBarFill');
         
-        // Form inputs
-        const loginEmail = document.getElementById('loginEmail');
-        const loginPassword = document.getElementById('loginPassword');
-        const signupEmail = document.getElementById('signupEmail');
-        const signupPassword = document.getElementById('signupPassword');
-        const fullName = document.getElementById('fullName');
-        const city = document.getElementById('city');
-        const address = document.getElementById('address');
-        const additionalAddress = document.getElementById('additionalAddress');
+    
         
         // Buttons
         const loginBtn = document.getElementById('loginBtn');
@@ -527,6 +550,7 @@
         const backToStep1Btn = document.getElementById('backToStep1Btn');
         const signupBtn = document.getElementById('signupBtn');
         const logoutBtn = document.getElementById('logoutBtn');
+        const nosizeBtn= document.getElementById('sizeBtn')
         
         // App content
         const appContent = document.getElementById('appContent');
@@ -537,6 +561,7 @@
         const profileEmail = document.getElementById('profileEmail');
         const profileFullName = document.getElementById('profileFullName');
         const profileCity = document.getElementById('profileCity');
+        const profilePhone = document.getElementById('profilePhone');
         const profileAddress = document.getElementById('profileAddress');
         const profileAdditionalAddress = document.getElementById('profileAdditionalAddress');
         const editProfileBtn = document.getElementById('editProfileBtn');
@@ -653,111 +678,115 @@
             }
         });
 
-        // Signup functionality
         signupBtn.addEventListener('click', () => {
-            const email = signupEmail.value;
-            const password = signupPassword.value;
-            const userFullName = fullName.value;
-            const userCity = city.value;
-            const userAddress = address.value;
-            const userAdditionalAddress = additionalAddress.value;
-            
-            if (email && password && userFullName && userCity && userAddress) {
-                firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        // Save user profile information
-                        const userId = userCredential.user.uid;
-                        firebase.database().ref('users/' + userId).set({
-                            fullName: userFullName,
-                            city: userCity,
-                            address: userAddress,
-                            additionalAddress: userAdditionalAddress || '',
-                            email: email
-                        })
-                        .then(() => {
-                            showToast('Account created successfully');
-                        })
-                        .catch((error) => {
-                            showToast(`Error saving profile: ${error.message}`, 'error');
-                        });
-                    })
-                    .catch((error) => {
-                        showToast(`Sign up failed: ${error.message}`, 'error');
-                    });
-            } else {
-                showToast('Please fill in all required fields', 'error');
-            }
+    const email = signupEmail.value;
+    const password = signupPassword.value;
+    const userFullName = fullName.value;
+    const userCity = city.value;
+    const userPhone = phone.value;
+    const userAddress = address.value;
+    const userAdditionalAddress = additionalAddress.value;
+    
+    if (email && password && userFullName && userCity && userPhone && userAddress) {
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Save user profile information
+                const userId = userCredential.user.uid;
+                firebase.database().ref('users/' + userId).set({
+                    fullName: userFullName,
+                    city: userCity,
+                    phone: userPhone,
+                    address: userAddress,
+                    additionalAddress: userAdditionalAddress || '',
+                    email: email
+                })
+                .then(() => {
+                    showToast('Account created successfully');
+                })
+                .catch((error) => {
+                    showToast(`Error saving profile: ${error.message}`, 'error');
+                });
+            })
+            .catch((error) => {
+                showToast(`Sign up failed: ${error.message}`, 'error');
+            });
+    } else {
+        showToast('Please fill in all required fields', 'error');
+    }
+});
+
+logoutBtn.addEventListener('click', () => {
+    firebase.auth().signOut()
+        .then(() => {
+            showToast('Logged out successfully');
+        })
+        .catch((error) => {
+            showToast(`Error logging out: ${error.message}`, 'error');
         });
+});
 
         // Logout functionality
-        logoutBtn.addEventListener('click', () => {
-            firebase.auth().signOut()
-                .then(() => {
-                    showToast('Logged out successfully');
-                })
-                .catch((error) => {
-                    showToast(`Logout failed: ${error.message}`, 'error');
-                });
-        });
-
-        // Load user profile data
         function loadUserProfile(userId) {
-            firebase.database().ref('users/' + userId).once('value')
-                .then((snapshot) => {
-                    const userData = snapshot.val();
-                    if (userData) {
-                        profileEmail.value = userData.email || firebase.auth().currentUser.email;
-                        profileFullName.value = userData.fullName;
-                        profileCity.value = userData.city;
-                        profileAddress.value = userData.address;
-                        profileAdditionalAddress.value = userData.additionalAddress || '';
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error loading user profile:', error);
-                    showToast('Error loading profile', 'error');
-                });
-        }
+    firebase.database().ref('users/' + userId).once('value')
+        .then((snapshot) => {
+            const userData = snapshot.val();
+            if (userData) {
+                profileEmail.value = userData.email || firebase.auth().currentUser.email;
+                profileFullName.value = userData.fullName;
+                profileCity.value = userData.city;
+                profilePhone.value = userData.phone || '';
+                profileAddress.value = userData.address;
+                profileAdditionalAddress.value = userData.additionalAddress || '';
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading user profile:', error);
+            showToast('Error loading profile', 'error');
+        });
+}
 
         // Edit profile functionality
-        editProfileBtn.addEventListener('click', () => {
-            profileFullName.readOnly = false;
-            profileCity.readOnly = false;
-            profileAddress.readOnly = false;
-            profileAdditionalAddress.readOnly = false;
-            
-            profileFullName.focus();
-            
-            editProfileBtn.classList.add('hidden');
-            saveProfileBtn.classList.remove('hidden');
-        });
+       editProfileBtn.addEventListener('click', () => {
+    profileFullName.readOnly = false;
+    profileCity.readOnly = false;
+    profilePhone.readOnly = false;
+    profileAddress.readOnly = false;
+    profileAdditionalAddress.readOnly = false;
+    
+    profileFullName.focus();
+    
+    editProfileBtn.classList.add('hidden');
+    saveProfileBtn.classList.remove('hidden');
+});
 
         saveProfileBtn.addEventListener('click', () => {
-            const user = firebase.auth().currentUser;
+    const user = firebase.auth().currentUser;
+    
+    if (user) {
+        firebase.database().ref('users/' + user.uid).update({
+            fullName: profileFullName.value,
+            city: profileCity.value,
+            phone: profilePhone.value,
+            address: profileAddress.value,
+            additionalAddress: profileAdditionalAddress.value
+        })
+        .then(() => {
+            showToast('Profile updated successfully');
             
-            if (user) {
-                firebase.database().ref('users/' + user.uid).update({
-                    fullName: profileFullName.value,
-                    city: profileCity.value,
-                    address: profileAddress.value,
-                    additionalAddress: profileAdditionalAddress.value
-                })
-                .then(() => {
-                    showToast('Profile updated successfully');
-                    
-                    profileFullName.readOnly = true;
-                    profileCity.readOnly = true;
-                    profileAddress.readOnly = true;
-                    profileAdditionalAddress.readOnly = true;
-                    
-                    editProfileBtn.classList.remove('hidden');
-                    saveProfileBtn.classList.add('hidden');
-                })
-                .catch((error) => {
-                    showToast(`Error updating profile: ${error.message}`, 'error');
-                });
-            }
+            profileFullName.readOnly = true;
+            profileCity.readOnly = true;
+            profilePhone.readOnly = true;
+            profileAddress.readOnly = true;
+            profileAdditionalAddress.readOnly = true;
+            
+            editProfileBtn.classList.remove('hidden');
+            saveProfileBtn.classList.add('hidden');
+        })
+        .catch((error) => {
+            showToast(`Error updating profile: ${error.message}`, 'error');
         });
+    }
+});
 
         // Place order functionality
         placeOrderBtn.addEventListener('click', () => {
@@ -896,6 +925,49 @@
         navProfile.addEventListener('click', () => {
             setActiveTab('profile');
         });
+
+        document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+        const updates = {
+            fullName: document.getElementById('nameInput').value,
+            phone: document.getElementById('phoneInput').value, // NEW LINE
+            city: document.getElementById('cityInput').value,
+            address: document.getElementById('addressInput').value,
+            additionalAddress: document.getElementById('additionalAddressInput').value,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        };
+        
+        // Update user profile
+        firebase.database().ref('users/' + currentUser.uid).update(updates)
+            .then(() => {
+                showToast('Profile updated successfully!', 'success');
+            })
+            .catch((error) => {
+                showToast('Error updating profile: ' + error.message, 'error');
+            });
+    } else {
+        showToast('Please sign in to update your profile', 'error');
+    }
+});
+
+function sizeless() {
+    let nosizeBtn = document.getElementById('sizeBtn');
+    let NOSIZE = document.getElementById('itemSize');
+
+    if (NOSIZE.value === "NO SIZE REQUIRED") {
+        NOSIZE.value = "";
+        NOSIZE.readOnly = false;
+        nosizeBtn.innerText = "NO SIZE REQUIRED";
+    } else {
+        NOSIZE.value = "NO SIZE REQUIRED";
+        NOSIZE.readOnly = true;
+        nosizeBtn.innerText = "SIZE REQUIRED";
+    }
+}
+
     </script>
 </body>
 </html>
