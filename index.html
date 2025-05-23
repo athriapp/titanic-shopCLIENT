@@ -345,6 +345,30 @@
             height: 38px;
 
         }
+        @media all and (display-mode: standalone) {
+    /* Force fullscreen appearance */
+    html, body {
+        overflow-x: hidden;
+    }
+    
+    /* Hide install button container when in standalone mode */
+    #installContainer {
+        display: none !important;
+    }
+    
+    /* Additional styling for better standalone experience */
+    .container {
+        padding-top: 10px; /* Adjust if needed */
+    }
+}
+
+/* For iOS Safari standalone mode */
+@media all and (-webkit-touch-callout: none) and (display-mode: standalone) {
+    /* Same rules as above for iOS */
+    #installContainer {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -498,6 +522,7 @@
                 <div id="ordersList">
                 </div>
             </div>
+            
         </div>
     </div>
 
@@ -528,6 +553,41 @@
             appId: "1:552361007073:web:bf7c506205e1aa6aada4a0"
         };
         firebase.initializeApp(firebaseConfig);
+
+        function handleStandaloneMode() {
+    // Check if running in standalone mode (PWA installed)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                        window.navigator.standalone || 
+                        document.referrer.includes('android-app://');
+    
+    if (isStandalone) {
+        // Hide install button
+        const installContainer = document.getElementById('installContainer');
+        if (installContainer) {
+            installContainer.style.display = 'none';
+        }
+        
+        // Add class to body for additional styling if needed
+        document.body.classList.add('standalone-mode');
+        
+        // Prevent scroll bounce on iOS
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.scrollable')) return;
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Hide address bar on Android Chrome
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                window.scrollTo(0, 1);
+            }, 0);
+        });
+    }
+}
+
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', handleStandaloneMode);
+window.addEventListener('load', handleStandaloneMode);
 
         const authContainer = document.getElementById('authContainer');
         const loginForm = document.getElementById('loginForm');
