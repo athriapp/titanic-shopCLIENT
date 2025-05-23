@@ -1,30 +1,21 @@
 {
   "name": "Titanic Shop",
   "short_name": "Titanic",
-  "description": "Your Titanic Shop PWA",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#0056b3",
-  "orientation": "portrait-primary",
+  "theme_color": "#1a73e8",
+  "description": "A smart online shopping assistant with real-time order tracking.",
   "icons": [
     {
-      "src": "/titanic.png",
+      "src": "titanic.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     },
     {
-      "src": "/titanic.png",
+      "src": "titanic.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/titanic.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
