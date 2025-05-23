@@ -375,3 +375,19 @@ if (typeof module !== 'undefined' && module.exports) {
 }
 
 } 
+
+function checkIfInstalled() {
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+        this.isInstalled = true;
+        setTimeout(() => this.hideInstallButton(), 100);
+        return true;
+    }
+
+    if (document.referrer.includes('android-app://')) {
+        this.isInstalled = true;
+        setTimeout(() => this.hideInstallButton(), 100);
+        return true;
+    }
+
+    return false;
+}
