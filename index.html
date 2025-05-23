@@ -8,15 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database-compat.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-     <head>
-  <!-- Other head content -->
-  <link rel="manifest" href="/manifest.json">
-  
-  <!-- iOS specific -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="apple-touch-icon" href="/titanic.png">
-</head>
+
 
     <style>
         :root {
@@ -353,41 +345,6 @@
             height: 38px;
 
         }
-        @media all and (display-mode: standalone) {
-    /* Force fullscreen appearance */
-    html, body {
-        overflow-x: hidden;
-    }
-    
-    /* Hide install button container when in standalone mode */
-    #installContainer {
-        display: none !important;
-    }
-    
-    /* Additional styling for better standalone experience */
-    .container {
-        padding-top: 10px; /* Adjust if needed */
-    }
-}
-
-@media all and (display-mode: standalone) {
-    html, body {
-        overflow-x: hidden;
-        overflow-y: auto;
-        height: 100%;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    #installContainer {
-        display: none !important;
-    }
-
-    .container {
-        padding-top: 10px;
-    }
-}
-
-
     </style>
 </head>
 <body>
@@ -541,7 +498,6 @@
                 <div id="ordersList">
                 </div>
             </div>
-            
         </div>
     </div>
 
@@ -572,41 +528,6 @@
             appId: "1:552361007073:web:bf7c506205e1aa6aada4a0"
         };
         firebase.initializeApp(firebaseConfig);
-
-        function handleStandaloneMode() {
-    // Check if running in standalone mode (PWA installed)
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                        window.navigator.standalone || 
-                        document.referrer.includes('android-app://');
-    
-    if (isStandalone) {
-        // Hide install button
-        const installContainer = document.getElementById('installContainer');
-        if (installContainer) {
-            installContainer.style.display = 'none';
-        }
-        
-        // Add class to body for additional styling if needed
-        document.body.classList.add('standalone-mode');
-        
-        // Prevent scroll bounce on iOS
-        document.addEventListener('touchmove', function(e) {
-            if (e.target.closest('.scrollable')) return;
-            e.preventDefault();
-        }, { passive: false });
-        
-        // Hide address bar on Android Chrome
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                window.scrollTo(0, 1);
-            }, 0);
-        });
-    }
-}
-
-// Call this function when the page loads
-document.addEventListener('DOMContentLoaded', handleStandaloneMode);
-window.addEventListener('load', handleStandaloneMode);
 
         const authContainer = document.getElementById('authContainer');
         const loginForm = document.getElementById('loginForm');
@@ -1003,6 +924,33 @@ logoutBtn.addEventListener('click', () => {
             setActiveTab('profile');
         });
 
+        document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser) {
+        const updates = {
+            fullName: document.getElementById('nameInput').value,
+            phone: document.getElementById('phoneInput').value, // NEW LINE
+            city: document.getElementById('cityInput').value,
+            address: document.getElementById('addressInput').value,
+            additionalAddress: document.getElementById('additionalAddressInput').value,
+            updatedAt: firebase.database.ServerValue.TIMESTAMP
+        };
+        
+        // Update user profile
+        firebase.database().ref('users/' + currentUser.uid).update(updates)
+            .then(() => {
+                showToast('Profile updated successfully!', 'success');
+            })
+            .catch((error) => {
+                showToast('Error updating profile: ' + error.message, 'error');
+            });
+    } else {
+        showToast('Please sign in to update your profile', 'error');
+    }
+});
+
 function sizeless() {
     let nosizeBtn = document.getElementById('sizeBtn');
     let NOSIZE = document.getElementById('itemSize');
@@ -1019,6 +967,5 @@ function sizeless() {
 }
 
     </script>
-    <script src="install.js"></script>
 </body>
 </html>
