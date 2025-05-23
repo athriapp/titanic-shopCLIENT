@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-auth-compat.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.2/firebase-database-compat.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+     <script src="install.js"></script>
 
     <style>
         :root {
@@ -517,7 +517,7 @@
     </div>
 
     <script>
-        // Initialize Firebase
+    
         const firebaseConfig = {
             apiKey: "AIzaSyDY3Y9uwQMFEeZQfLE09PrpbYmld02giZQ",
             authDomain: "titanic-shop.firebaseapp.com",
@@ -529,8 +529,6 @@
         };
         firebase.initializeApp(firebaseConfig);
 
-        // DOM Elements
-        // Auth elements
         const authContainer = document.getElementById('authContainer');
         const loginForm = document.getElementById('loginForm');
         const signupContainer = document.getElementById('signupContainer');
@@ -690,7 +688,7 @@
     if (email && password && userFullName && userCity && userPhone && userAddress) {
         firebase.auth().createUserWithEmailAndPassword(email, password)
             .then((userCredential) => {
-                // Save user profile information
+               
                 const userId = userCredential.user.uid;
                 firebase.database().ref('users/' + userId).set({
                     fullName: userFullName,
@@ -926,33 +924,6 @@ logoutBtn.addEventListener('click', () => {
             setActiveTab('profile');
         });
 
-        document.getElementById('updateProfileForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const currentUser = firebase.auth().currentUser;
-    if (currentUser) {
-        const updates = {
-            fullName: document.getElementById('nameInput').value,
-            phone: document.getElementById('phoneInput').value, // NEW LINE
-            city: document.getElementById('cityInput').value,
-            address: document.getElementById('addressInput').value,
-            additionalAddress: document.getElementById('additionalAddressInput').value,
-            updatedAt: firebase.database.ServerValue.TIMESTAMP
-        };
-        
-        // Update user profile
-        firebase.database().ref('users/' + currentUser.uid).update(updates)
-            .then(() => {
-                showToast('Profile updated successfully!', 'success');
-            })
-            .catch((error) => {
-                showToast('Error updating profile: ' + error.message, 'error');
-            });
-    } else {
-        showToast('Please sign in to update your profile', 'error');
-    }
-});
-
 function sizeless() {
     let nosizeBtn = document.getElementById('sizeBtn');
     let NOSIZE = document.getElementById('itemSize');
@@ -969,5 +940,6 @@ function sizeless() {
 }
 
     </script>
+    <script src="install.js"></script>
 </body>
 </html>
