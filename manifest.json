@@ -8,12 +8,12 @@
   "description": "A smart online shopping assistant with real-time order tracking.",
   "icons": [
     {
-      "src": "titanic-192.png",
+      "src": "titanic.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "titanic-192.png",
+      "src": "titanic.png",
       "sizes": "192x192",
       "type": "image/png"
     }
