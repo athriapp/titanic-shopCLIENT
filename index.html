@@ -19,7 +19,7 @@
     <!-- iOS PWA Support -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Titanic Store">
+    <meta name="apple-mobile-web-app-title" content="Titanic Shop">
     <link rel="apple-touch-icon" href="/titanic.png">
     
     <!-- Theme Colors -->
@@ -897,20 +897,12 @@ orderCard.innerHTML = `
     <div><strong>Status:</strong> <span class="order-status ${statusClass}">${order.status}</span></div>
 `;
 
-// Alternative version if you want to copy the link to clipboard:
 orderCard.innerHTML = `
     <div class="order-date">${formattedDate}</div>
     <div><strong>Item Link:</strong> 
-        <button onclick="copyToClipboard('${order.itemLink}')" 
-                style="margin-left: 10px; padding: 5px 10px; background-color: var(--accent-color); 
-                       color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-            Copy Link
-        </button>
-        <button onclick="window.open('${order.itemLink}', '_blank')" 
-                style="margin-left: 5px; padding: 5px 10px; background-color: var(--primary-color); 
-                       color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">
-            Open Link
-        </button>
+        <div class="item-link-container" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 5px; max-width: 100%;">
+            ${order.itemLink}
+        </div>
     </div>
     <div><strong>Size:</strong> ${order.size}</div>
     <div><strong>Color:</strong> ${order.color}</div>
@@ -1024,7 +1016,6 @@ function sizeless() {
         nosizeBtn.innerText = "SIZE REQUIRED";
     }
 }
-
     </script>
 </body>
 </html>
